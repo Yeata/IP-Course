@@ -1,5 +1,5 @@
 <template>
-  <button class="button-component" @click="console.log('hi');">hi</button>
+  <button class="button-component" @click="('Shop Now');">Shop</button>
 </template>
 
 <script>
@@ -8,7 +8,7 @@ export default {
   props: {
     text: {
       type: String,
-      default: "ghfghffhggfhgfh",
+      
     },
   },
 };

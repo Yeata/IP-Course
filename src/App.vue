@@ -1,30 +1,22 @@
-
-
 <template>
-   <div id="app" class="container">
-    <CategoryComponent />
-    <PromotionComponent />
-    <ButtonComponent />
+  <div id="app">
+    <CategoryComponent/>
+    <PromotionComponent/>
+    <router-view />
   </div>
 </template>
 
 <script>
 
-import CategoryComponent from "./src/components/CategoryComponent.vue";
-import PromotionComponent from "./src/components/Promotion.vue";
-
+import CategoryComponent from './components/CategoryComponent.vue';
+import PromotionComponent from './components/PromotionComponent.vue';
 export default {
   name: "App",
   components: {
-    CategoryComponent,
     PromotionComponent,
+   CategoryComponent,
+   
   },
 };
 </script>
 
-<style>
-.container {
-  display: flex;
-  flex-direction: column;
-}
-</style>
