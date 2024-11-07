@@ -1,23 +1,24 @@
-<<template>
-  <div class="promotion-component">
-    <div v-for="promotion in promotions" :key="promotion.id" class="promotion-item">
+<template>
+  <div>
+    <!-- <div v-for="promotion in promotions" :key="promotion.id" class="promotion-item">
       <div class="promotion-content">
         <h3>{{ promotion.title }}</h3>
-        <ButtonComponent :text="'Shop Now'" />
+        <ButtonComponent @click="shopNow()" />
       </div>
       <img :src="promotion.image" :alt="promotion.title" class="promotion-image" />
-    </div>
+    </div> -->
+    <ButtonComponent @click="shopNow()" />
   </div>
 </template>
 
 <script>
-import ButtonComponent from "./Button.vue";
+// import ButtonComponent from "./ButtonComponent.vue";
 
 export default {
   name: "PromotionComponent",
-  components: {
-    ButtonComponent,
-  },
+  // components: {
+  //   ButtonComponent,
+  // },
   data() {
     return {
       promotions: [
@@ -38,6 +39,12 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    shopNow() {
+      alert("Let's shop: ");
+      console.log("aaa")
+    },
   },
 };
 </script>
