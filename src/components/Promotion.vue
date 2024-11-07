@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- <div v-for="promotion in promotions" :key="promotion.id" class="promotion-item">
+    <div v-for="promotion in promotions" :key="promotion.id" class="promotion-item">
       <div class="promotion-content">
         <h3>{{ promotion.title }}</h3>
         <ButtonComponent @click="shopNow()" />
       </div>
       <img :src="promotion.image" :alt="promotion.title" class="promotion-image" />
-    </div> -->
+    </div>
     <ButtonComponent @click="shopNow()" />
   </div>
 </template>
