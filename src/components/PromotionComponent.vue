@@ -3,49 +3,47 @@
       <div v-for="promotion in promotions" :key="promotion.id" class="promotion-item">
         <div class="promotion-content">
           <h3>{{ promotion.title }}</h3>
-          <ButtonComponent @click="shopNow(promotion.title)" />
+          <ButtonComponent/>
         </div>
-        <img :src="promotion.image" :alt="promotion.title" class="promotion-image" />
+        <img :src="'http://localhost:3000/'+promotion.image" :alt="promotion.title" class="promotion-image" />
       </div>
     </div>
   </template>
   
   <script>
+  import { ref ,onMounted} from "vue";
   import ButtonComponent from "./ButtonComponent.vue";
-  
+  import axios from "axios";
+
   export default {
     name: "PromotionComponent",
     components: {
       ButtonComponent,
     },
-    data() {
-      return {
-        promotions: [
-          {
-            id: 1,
-            title: "Make your Breakfast Healthy and Easy",
-            image: "./src/items/Onion.png",
-          },
-          {
-            id: 2,
-            title: "The Best Organic Products Online",
-            image: "./src/items/Drink.png",
-          },
-          {
-            id: 3,
-            title: "Get Fresh Veggies Delivered",
-            image: "./src/items/Vegetable.png",
-          },
-        ],
-      };
-    },
-    methods: {
-      shopNow(title) {
-        alert(`Let's shop: ${title}`);
-        console.log("Button clicked for:", title);
-      },
-    },
-  };
+    setup() {
+    const promotions = ref([]);
+
+    const fetchPromotions = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/promotions'); // Corrected endpoint
+        promotions.value = response.data.map((item) => ({
+          id: item.id,
+          title: item.title,
+          url: item.url,
+          color: item.color,
+          buttonColor: item.buttonColor,
+          image: item.image,
+        }));
+      } catch (error) {
+        console.error('Error fetching promotions:', error);
+      }
+    };
+
+    onMounted(fetchPromotions);
+
+    return { promotions };
+  },
+}
   </script>
   
   <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <button class="button-component" @click="('Shop Now');">Shop</button>
+  <button class="button-component">Shop</button>
 </template>
 
 <script>

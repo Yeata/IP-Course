@@ -1,34 +1,43 @@
 <template>
     <div class="category-component">
       <div v-for="category in categories" :key="category.id" class="category-item">
-        <img :src="category.image" :alt="category.name" />
+        <img :src="'http://localhost:3000/'+category.image" :alt="category.name" />
         <p>{{ category.name }}</p>
-        <span>{{ category.items }} items</span>
+        <span>{{ category.productCount }} items</span>
       </div>
     </div>
   </template>
   
   <script>
-  export default {
-    name: "CategoryComponent",
-    data() {
-      return {
-        categories: [
-          { id: 1, name: "Cake & Milk", items: 14, image: "./src/assets/Burger.png" },
-          { id: 2, name: "Peach", items: 17, image: "./src/assets/Snack.png" },
-          { id: 3, name: "Organic Kiwi", items: 21, image: "./src/assets/kiwi.png" },
-          { id: 4, name: "Red Apple", items: 68, image: "./src/assets/apple.png" },
-          { id: 5, name: "Snack", items: 34, image: "./src/assets/Snack.png" },
-          { id: 6, name: "Black Plum", items: 25, image: "./src/assets/blueberry.png" },
-          { id: 7, name: "Vegetables", items: 63, image: "./src/assets/cabbage.png" },
-          { id: 8, name: "Headphone", items: 33, image: "./src/assets/headphone.png" },
-          { id: 9, name: "Gummy", items: 63, image: "./src/assets/gummy.png" },
-          { id: 10, name: "Orange", items: 33, image: "./src/assets/orange.png" },
-        ],
-      };
-    },
-  };
-  </script>
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+
+export default {
+  name: "CategoryComponent",
+  setup() {
+    const categories = ref([]);
+
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/api/categories');
+        categories.value = res.data.map((item) => ({
+          id: item.id,
+          name: item.name,
+          productCount: item.productCount,
+          color: item.color,
+          image: item.image,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    onMounted(fetchCategories);
+
+    return { categories };
+  },
+};
+</script>
   
   <style scoped>
   .category-component {
