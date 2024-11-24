@@ -45,7 +45,6 @@ export default {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid layout */
     gap: 15px;
     padding: 30px;
-    background-color: #eafde2;
     border-radius: 8px;
   }
   
@@ -53,7 +52,7 @@ export default {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 25px;
+    padding: 20px;
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
     font-size: 12px;
@@ -101,16 +100,5 @@ export default {
     }
   }
 
-  /* Alternate background colors for each card */
-.category-item:nth-child(1) { background-color: #fef7e7; } /* Light yellow */
-.category-item:nth-child(2) { background-color: #e8f5e9; } /* Light green */
-.category-item:nth-child(3) { background-color: #f1f8e9; } /* Light kiwi green */
-.category-item:nth-child(4) { background-color: #ffebee; } /* Light red */
-.category-item:nth-child(5) { background-color: #fff3e0; } /* Light orange */
-.category-item:nth-child(6) { background-color: #f3e5f5; } /* Light purple */
-.category-item:nth-child(7) { background-color: #e8f5e9; } /* Light green */
-.category-item:nth-child(8) { background-color: #e3f2fd; } /* Light blue */
-.category-item:nth-child(9) { background-color: #fffde7; } /* Light yellow */
-.category-item:nth-child(10) { background-color: #e3f2fd; } /* Light blue */
   </style>
   
