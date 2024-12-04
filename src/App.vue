@@ -1,76 +1,102 @@
 <template>
   <div id="app">
-    <CategoryComponent/>
-    <PromotionComponent/>
+    <!-- Category Feature Menu -->
+    <h2>{{ categoryTitle }}</h2>
+    <Menu
+      :type="CategoryProduct" 
+      @changeBar="updateActiveTab" 
+      @menu-selected="handleMenuSelection" 
+    />
+    <CategoryComponent />
+
+    <PromotionComponent />
+
+    <!-- Popular Product Menu -->
+    <h2>{{ popularTitle }}</h2>
+    <Menu
+      :type="PopularProducts"  
+      @changeBar="updateActiveTab"
+      @menu-selected="handleMenuSelection" 
+    />
+    <Product />
     <router-view />
   </div>
 </template>
 
 <script>
-
+import Menu from './components/Menu.vue';
 import CategoryComponent from './components/CategoryComponent.vue';
 import PromotionComponent from './components/PromotionComponent.vue';
+import Product from './components/Product.vue';
 import { useProductStore } from "./Stores/Product";
 import { mapState } from "pinia";
 
 export default {
   name: "App",
   components: {
+    Menu,
+    CategoryComponent,
     PromotionComponent,
-   CategoryComponent,
+    Product,
   },
 
-
-data() {
+  data() {
     return {
-      currentGroupname: "Group A",
+      
+      categoryTitle: "Featured Categories",  
+      popularTitle: "Popular Products",     
+      CategoryProduct: "Feature Categories",  
+      PopularProducts: "Popular Product",     
+      currentTabs: {
+        category: "ALL", // Initial value for the category selection
+        popular: "ALL",  // Initial value for popular category selection
+      },
     };
   },
 
-  methods: {},
+  methods: {
+    updateActiveTab({ type, tab }) {
+      const key = type.toLowerCase().replace(" ", "");
+      if (this.currentTabs[key] !== undefined) {
+        this.currentTabs[key] = tab;
+      }
+    },
+
+    handleMenuSelection(item) {
+      console.log("Menu selected:", item);
+      if (item === "ALL") {
+        // Handle "ALL" selection if needed
+        this.currentTabs.popular = "ALL";
+      } else {
+        // Handle selection of categories or other items
+        this.currentTabs.popular = item;
+      }
+    },
+  },
 
   mounted() {
     const productStore = useProductStore();
     productStore.fetchCategories();
     productStore.fetchPromotions();
-    productStore.fetchGroup();
+    productStore.fetchGroups();
     productStore.fetchProducts();
   },
 
   computed: {
-    // Map state and getters from the Pinia store
     ...mapState(useProductStore, {
-
-      // Map the getter getPopularPRoduct to popularProducts
-      popularProducts: "getPopularProduct",
-
-      // Dynamically call getCategoriesByGroup with currentGroupName
-      categories(store) {
-        return store.getCategoriesByGroup(this.currentGroupname);
-      },
-
-      // Dynamically call getProductsByGroup with currentGroupName
-      productsByGroup(store) {
-        return store.getProductsByGroup(this.currentGroupname);
-      },
-
-      // Dynamically call getProductsByCategory
-      getProductsByCategory(store){
-        return store.getProductsByCategory;
-      },
-
-      // Get all products directly from the state
-      allProducts(store) {
-        return store.products;
-      },
-
-  
-      promotions(store) {
-        return store.promotions;
-      },
+      categories: (state) =>
+        state.getCategoriesByGroup(this.currentTabs.category),
+      promotions: "promotions",
+      allProducts: "products",
     }),
+
+    filteredProducts() {
+      const productStore = useProductStore();
+      if (this.currentTabs.popular === "ALL") {
+        return productStore.getPopularProducts();
+      }
+      return productStore.getProductsByGroup(this.currentTabs.popular);
+    },
   },
 };
-
 </script>
-
