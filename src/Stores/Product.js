@@ -27,10 +27,24 @@ export const useProductStore = defineStore("product", {
         state.products.filter((product) => product.categoryId === categoryId);
     },
 
-    // Get all popular products (countSold > 10)
     getPopularProducts: (state) => {
-      return state.products.filter((product) => product.countSold > 10);
-    },
+      return state.products.map((product) => {
+        let label = null;
+    
+        if (product.countSold < 5) {
+          label = "Hot";
+        } else if (product.countSold > 20) {
+          label = "Sale";
+        } else if (product.promotionAsPercentage > 0) {
+          label = `${product.promotionAsPercentage}% Off`;
+        }
+    
+        return {
+          ...product,
+          label, // Add the label to each product
+        };
+      });
+    },    
   },
   actions: {
     async fetchCategories() {
@@ -65,6 +79,8 @@ export const useProductStore = defineStore("product", {
           group: product.group,
           categoryId: product.categoryId, 
           countSold: product.countSold, 
+          sale: product.sale,
+          hot: product.hot,
         }));
       } catch (error) {
         console.error("Error fetching products:", error);
