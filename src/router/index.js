@@ -12,7 +12,7 @@ const routes = [
     component: Page,
     children: [
       {
-        path: "section/:id",
+        path: "section/:sectionNumber",
         component: Section,
       }
     ]
