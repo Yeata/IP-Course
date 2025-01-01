@@ -30,7 +30,7 @@
 
     <!-- Main Content -->
     <div class="content">
-      <router-view></router-view>
+      <router-view :message="message" @updateMessage="updateMessage"></router-view>
     </div>
 
     <!-- Footer -->
@@ -43,11 +43,23 @@
 <script>
 export default {
   data() {
-    return {
-      pages: [1, 2, 3],      
-      sections: [1, 2, 3, 4] 
-    };
+  return {
+    pages: [1, 2, 3],
+    sections: [1, 2, 3, 4],
+    message: {
+      text: "",
+      page: 1
+    }
+  };
+},
+
+  methods:{
+  updateMessage(message){
+    this.message = message;
   }
+}
+
+  
 };
 </script>
 
