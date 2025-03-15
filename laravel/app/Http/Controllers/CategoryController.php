@@ -10,35 +10,39 @@ class CategoryController extends Controller
     public function getCategories() 
     
     {
-        return response()->json(Category::all());
+        return Category::all();
     }
 // --post /api/categories
-    public function createCategory()
+    public function createCategory(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255'
         ]);
 
-        $category = Category::create($request->all());
-        return response()->json($category, 201);
+        $category = Category::create([
+            'name' => $request->name,            
+        ]);
+        $category->save();
+        return $category;
     }
 //--Get/api/categories/{categoryId}
     public function getCategory($categoryId) {
         return response()->json(Category::findOrFail($categoryId));
     }
 //---patch/api/categories/{categoryId}
-    public function updateCategory($categoryId){
+    public function updateCategory(Request $request, $categoryId){
         $category = Category::findOrFail($categoryId);
         $request->validate([
             'name' => 'sometimes|string|max:255'
         ]);
 
-        $category->update($request->all());
-        return response()->json($category);
+        $category->name = $request->name;
+        $category->save();
+        return $category;
     }
 
 //---Delete/api/categories/{categoryId}
-    public function deleteCategory($categoryId){
+    public function deleteCategory(Request $request, $categoryId){
         $category = Category::findOrFail($categoryId);
         $category->delete();
         return response()->json(['message' => 'Category deleted successfully']);
