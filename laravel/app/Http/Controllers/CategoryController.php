@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
 //-- Get/api/categories
-    public function getCategories() 
-    
+    public function getCategories()
     {
         return Category::all();
     }

@@ -32,7 +32,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'Product not found'], 404);
         }
 
-        return response()->json(['product' => $product], 200);
+        return response()->json($product, 200);
     }
 
     public function updateProduct(Request $request, $productId)
